@@ -11,14 +11,32 @@ tools = {
     name = "hoe",
     sprite = 17,
     x = 8,
-    y = 8
+    y = 8,
+    c = 6
   },
   {
   		index = 2,
-    name = "seeds",
+    name = "watering can",
     sprite = 19,
     x = 16,
-    y = 8
+    y = 8,
+    c = 12
+  },
+  {
+  		index = 3,
+    name = "seeds",
+    sprite = 20,
+    x = 24,
+    y = 8,
+    c = 11
+  },
+  {
+  		index = 4,
+    name = "sycthe",
+    sprite = 21,
+    x = 32,
+    y = 8,
+    c = 11
   }
 }
 
@@ -64,7 +82,7 @@ function _update()
 		end
 		
 		if (btnp(2)) then
-		  if (b.tool.index == 2) then
+		  if (b.tool.index == 4) then
 		    b.tool = tools[1]
 		  else
 		    b.tool = tools[b.tool.index + 1]
@@ -133,12 +151,8 @@ function _draw()
 		circfill(8, 120, 12, 15)
 		sspr(b.tool.x, b.tool.y, 8, 8, 1, 110, 16, 16)
 		
-		
-		
-		circfill(b.x, b.y, b.r)
-		spr(b.tool.sprite, b.x - 4, b.y - 4)
-		rectfill(p.x, p.y, p.x+p.w, p.y+p.h)
-		rectfill(p.x, p.y, p.x+p.w, p.y+p.h)
+		circfill(b.x, b.y, b.r, b.tool.c)
+		rectfill(p.x, p.y, p.x+p.w, p.y+p.h, 10)
   print(b.tool.sprite)
 end
 __gfx__
