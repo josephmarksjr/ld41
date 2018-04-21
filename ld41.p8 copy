@@ -65,6 +65,16 @@ function _update()
 		
 		b.x += b.vx
 		b.y += b.vy
+		
+		-- access cell you are in
+		local x = flr(b.x/8)
+		local y = flr(b.y/8)
+		if (x > 0 and x < 16 and y > 0 and y < 16) then
+		  local cell = rows[x][y]
+		  if (cell) then
+		    rows[x][y] = {index = 2}
+		  end
+		end
 end
 
 function _draw()
