@@ -5,9 +5,27 @@ __lua__
 -- combine two
 -- incompatibale genres
 
+tools = {
+  {
+  	 index = 1,
+    name = "hoe",
+    sprite = 17,
+    x = 8,
+    y = 8
+  },
+  {
+  		index = 2,
+    name = "seeds",
+    sprite = 19,
+    x = 16,
+    y = 8
+  }
+}
+
+
 p = {
 		x = 64,
-		y = 110,
+		y = 100,
 		h = 4,
 		w = 20
 }
@@ -18,13 +36,15 @@ b = {
 	 r = 3,
 	 vx = -2,
 	 vy = -2,
-	 tool = "hoe"
+	 tool = tools[1]
 }
+
 
 rows = {
 }
 
 function _init()
+		b.tool = tools[1]
 		for i=1,16 do
   		row = {}
   		for j=1,16 do
@@ -41,6 +61,14 @@ function _update()
 		
 		if (btn(1)) then
 				p.x += 2
+		end
+		
+		if (btnp(2)) then
+		  if (b.tool.index == 2) then
+		    b.tool = tools[1]
+		  else
+		    b.tool = tools[b.tool.index + 1]
+		  end
 		end
 		
 		if (
@@ -71,8 +99,8 @@ function _update()
 		local x = flr(b.x/8)
 		local y = flr(b.y/8)
 		if (x > 0 and x < 16 and y > 0 and y < 16) then
-		  if (rows[x][y]) then
-		    if (b.tool == "hoe") then
+		  if (rows[x][y] and b.tool) then
+		    if (b.tool.name == "hoe") then
 		    		new_cell = do_hoe(rows[x][y])
 		    end
 		    
@@ -102,9 +130,16 @@ function _draw()
 				end
 		end
 		
+		circfill(8, 120, 12, 15)
+		sspr(b.tool.x, b.tool.y, 8, 8, 1, 110, 16, 16)
+		
+		
+		
 		circfill(b.x, b.y, b.r)
+		spr(b.tool.sprite, b.x - 4, b.y - 4)
 		rectfill(p.x, p.y, p.x+p.w, p.y+p.h)
 		rectfill(p.x, p.y, p.x+p.w, p.y+p.h)
+  print(b.tool.sprite)
 end
 __gfx__
 00000000333333334444444444444444444444444444444444444444444444444444444444444444444444440022220000222200002222000022220000222200
