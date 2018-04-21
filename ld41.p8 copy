@@ -114,13 +114,23 @@ function _update()
 		b.y += b.vy
 		
 		-- access cell you are in
-		local x = flr(b.x/8)
-		local y = flr(b.y/8)
-		if (x > 0 and x < 16 and y > 0 and y < 16) then
+		local x = flr(b.x/8) + 1
+		local y = flr(b.y/8) + 1
+		if (
+				x > 0 and 
+				x < 16 and 
+				y > 0 and 
+				y < 16
+		) then
 		  if (rows[x][y] and b.tool) then
+		    new_cell = rows[x][y]
 		    if (b.tool.name == "hoe") then
 		    		new_cell = do_hoe(rows[x][y])
 		    end
+		    
+		    if (b.tool.name == "seeds") then
+		      new_cell = do_seeds(rows[x][y])
+		    end  
 		    
 		    rows[x][y] = new_cell
 		  end
@@ -133,6 +143,16 @@ function do_hoe(cell)
   end
   
   cell.index = 2
+  
+  return cell
+end
+
+function do_seeds(cell)
+  if (cell.index != 2) then
+    return cell
+  end
+  
+  cell.index = 3
   
   return cell
 end
@@ -153,7 +173,9 @@ function _draw()
 		
 		circfill(b.x, b.y, b.r, b.tool.c)
 		rectfill(p.x, p.y, p.x+p.w, p.y+p.h, 10)
-  print(b.tool.sprite)
+  pset(b.x,b.y)
+  print(p.x)
+  print(p.y)
 end
 __gfx__
 00000000333333334444444444444444444444444444444444444444444444444444444444444444444444440022220000222200002222000022220000222200
