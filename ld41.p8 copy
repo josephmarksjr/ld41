@@ -55,10 +55,10 @@ p = {
 
 b = {
 		x = 64,
-		y = 64,
+		y = 100,
 	 r = 3,
-	 dx = -2,
-	 dy = -2,
+	 dx = 2,
+	 dy = 2,
 	 tool = tools[1]
 }
 
@@ -161,9 +161,23 @@ function _update()
 		for i=1,16 do
 				for j=1,16 do
 					 local cell = rows[i][j] 
+					 local xx = (i-1)*8
+					 local yy = (j-1)*8
 					 if (cell.water_count > 0) then
 					   cell.ready_count -= 1
 					 end
+					 
+					 if (cell.index == 33) then
+					 if (check_ball_collision(next_x,next_y,xx,yy,8,8)) then
+		  				debug = xx
+		  				if (deflect_ball_box(x,y,8,8)) then
+		    				b.dx = -b.dx
+		  				else
+		  						b.dy = -b.dy
+		  				end
+		  				p.c = 2
+						end
+						end
 				end
 		end
 		
@@ -171,20 +185,20 @@ function _update()
 		b.y = next_y
 end
 
-function check_ball_collision(bx, by, x,y,w,h)
-		if (by - b.r > y + h) then
+function check_ball_collision(bx, by, box_x,box_y,box_w,box_h)
+		if (by - b.r > box_y + box_h) then
 		  return false
 		end
 		
-		if (by + b.r < y) then
+		if (by + b.r < box_y) then
 		  return false
 		end
 		
-		if (bx - b.r > x + w) then
+		if (bx - b.r > box_x + box_w) then
 		  return false
 		end
 		
-		if (bx + b.r < x) then
+		if (bx + b.r < box_x) then
 		  return false
 		end
 	
@@ -302,6 +316,7 @@ function _draw()
 		-- draw ball and paddle
 		circfill(b.x, b.y, b.r, b.tool.c)
 		rectfill(p.x, p.y, p.x+p.w, p.y+p.h, p.c)
+		print(debug)
 end
 __gfx__
 00000000333333334444444444444444444444444444444444444444444444444444444444444444000000000000000000000000000000000000000000000000
