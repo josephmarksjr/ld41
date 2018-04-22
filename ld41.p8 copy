@@ -101,11 +101,18 @@ function _update()
 		end
 		
 		if (btnp(2)) then
-		 	resume()
 		  if (b.tool.index == 4) then
 		    b.tool = tools[1]
 		  else
 		    b.tool = tools[b.tool.index + 1]
+		  end
+		end
+		
+		if (btnp(3)) then
+		  if (b.tool.index == 1) then
+		    b.tool = tools[4]
+		  else
+		    b.tool = tools[b.tool.index - 1]
 		  end
 		end
 		
